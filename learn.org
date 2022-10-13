@@ -1,0 +1,483 @@
+#+title: R and Statistics
+#+subtitle: Learning R and Statistics.
+#+author: Alberto Valdez
+#+SETUPFILE: ./config/org-theme-alt.config
+#+SETUPFILE: ./config/org-header.config
+#+PROPERTY: header-args:R :session "inferior ESS" :results value table :colnames yes :wrap org :width 640
+
+* MPG Dataset
+
+Learning R with Emacs.[fn:4] Trying to follow Google's R style guide. [fn:5]
+
+#+begin_src R :exports code :results silent
+library(ggplot2)
+library(tidyverse)
+#+end_src
+
+The mpg dataset contains fuel economy data from the EPA for vehicles manufactured between 1999 and 2008. The mpg dataset is built into R and is used throughout R documentation due to its availability, diversity of variables, and overall cleanliness of data. For our purposes, we'll use the mpg data to demonstrate how to implement each of our ggplot visualizations.
+
+#+begin_src R
+head(mpg)
+#+end_src
+
+#+RESULTS[079af57c7eaa7d172821de710068b7cfcb6fa2d3]:
+#+begin_org
+| manufacturer | model | displ | year | cyl | trans      | drv | cty | hwy | fl | class   |
+|--------------+-------+-------+------+-----+------------+-----+-----+-----+----+---------|
+| audi         | a4    |   1.8 | 1999 |   4 | auto(l5)   | f   |  18 |  29 | p  | compact |
+| audi         | a4    |   1.8 | 1999 |   4 | manual(m5) | f   |  21 |  29 | p  | compact |
+| audi         | a4    |     2 | 2008 |   4 | manual(m6) | f   |  20 |  31 | p  | compact |
+| audi         | a4    |     2 | 2008 |   4 | auto(av)   | f   |  21 |  30 | p  | compact |
+| audi         | a4    |   2.8 | 1999 |   6 | auto(l5)   | f   |  16 |  26 | p  | compact |
+| audi         | a4    |   2.8 | 1999 |   6 | manual(m5) | f   |  18 |  26 | p  | compact |
+#+end_org
+
+** Plotting bars.
+
+#+begin_src R :results file graphics :file resources/mpg1.png
+plt <- ggplot(mpg, aes(x=class))
+plt + geom_bar()
+#+end_src
+
+#+RESULTS[a4f4895ca8d2ea7a57daf1e956db3e68a2ee5f39]:
+#+begin_org
+[[file:./resources/mpg1.png]]
+#+end_org
+
+#+begin_src R :results file graphics :file resources/mpg2.png
+mpg_summary <- mpg %>%
+  group_by(manufacturer) %>%
+  summarize(Vehicle_Count=n(), .groups = 'keep') #create summary table
+plt <- ggplot(
+  mpg_summary,
+  aes(x=manufacturer,y=Vehicle_Count)) #import dataset into ggplot2
+plt + geom_col()
+#+end_src
+
+#+RESULTS[cc9481c969cd7ccce6d2e1ff58362bb6a07f1516]:
+#+begin_org
+[[file:./resources/mpg2.png]]
+#+end_org
+
+More info at the ggplot2 docs[fn:1].
+
+** Formatting output
+
+Adding labels and themes.
+
+#+begin_src R :results file graphics :file resources/mpg3.png
+plt + geom_col() +
+  xlab("Manufacturing Company") +
+  ylab("Number of Vehicles") +
+  theme(axis.text.x=element_text(angle=45, hjust=1))
+#+end_src
+
+#+RESULTS[d4e2023490263757a0f791fc827ad0ed068a7ed0]:
+#+begin_org
+[[file:./resources/mpg3.png]]
+#+end_org
+
+* MPG Summary
+
+** Summary Table
+
+#+begin_src R
+mpg_summary <-
+  subset(mpg, manufacturer=="toyota") %>%
+  group_by(cyl) %>%
+  summarize(Mean_Hwy=mean(hwy), .groups="keep")
+#+end_src
+
+#+RESULTS[9a5a2a98ab85a0f9cc783badada068ea6c02811c]:
+#+begin_org
+| cyl |         Mean_Hwy |
+|-----+------------------|
+|   4 | 28.2222222222222 |
+|   6 | 22.2307692307692 |
+|   8 | 16.6666666666667 |
+#+end_org
+
+Import dataset into ggplot and plot the data and adjust the axis.
+
+#+begin_src R :results file graphics :file resources/mpg_summary.png
+plt <- ggplot(mpg_summary, aes(x=cyl, y=Mean_Hwy))
+plt + geom_line() +
+  scale_x_discrete(limits=c(4, 6, 8)) +
+  scale_y_continuous(breaks = c(15:30))
+#+end_src
+
+#+RESULTS[b9f31fa04b6c6490ada0daf7392cecae3dd312ec]:
+#+begin_org
+[[file:./resources/mpg_summary.png]]
+#+end_org
+
+** Mpg dataset
+
+Import into ggplot and plot data with formatting.
+
+#+begin_src R :results file graphics :file resources/mpg_dots.png
+plt <- ggplot(mpg, aes(x=displ, y=cty))
+plt + geom_point() +
+  xlab("Engine Size (L)") +
+  ylab("City Fuel-Efficiency (MPG)")
+#+end_src
+
+#+RESULTS[30080fa6b06244e9327cd1ad2ae0776f2727ff0b]:
+#+begin_org
+[[file:./resources/mpg_dots.png]]
+#+end_org
+
+Aesthetic changes.
+
+- alpha changes the transparency of each data point
+- color changes the color of each data point
+- shape changes the shape of each data point
+- size changes the size of each data point
+
+#+begin_src R :results file graphics :file resources/mpg_dots2.png
+plt <- ggplot(mpg, aes(x=displ, y=cty, color=class))
+plt + geom_point() +
+  labs(
+    x="Engine Size(L)",
+    y="City Fuel-Efficiency (MPG)",
+    color="Vehicle Class"
+)
+#+end_src
+
+#+RESULTS[2038eb440e5ee60ace125760abaf4e61105d065d]:
+#+begin_org
+[[file:./resources/mpg_dots2.png]]
+#+end_org
+
+Different shapes.[fn:2]
+
+#+begin_src R :results file graphics :file resources/mpg_dots3.png
+plt <- ggplot(
+  mpg,
+  aes(x=displ, y=cty, color=class, shape=drv, size=cty)
+)
+plt + geom_point() +
+  labs(
+    x="Engine Size (L)",
+    y="City Fuel-Efficiency (MPG)",
+    color="Vehicle Class",
+    shape="Type of Drive"
+)
+#+end_src
+
+#+RESULTS[d9b27823b364eb823e8dff330bfa1d9fc5c96bb8]:
+#+begin_org
+[[file:./resources/mpg_dots3.png]]
+#+end_org
+
+Although there is no technical limit to the number of variables we can add to a ggplot figure, there are diminishing returns. A good rule of thumb is to limit the number of variables displayed in a single figure to a maximum of 3 or 4.
+
+* Boxplot
+
+Unlike the previous ggplot objects, geom_boxplot()expects a numeric vector assigned to the y-value[fn:3].
+
+#+begin_src R :results file graphics :file resources/mpg_box1.png :width 360
+plt <- ggplot(mpg, aes(y=hwy))
+plt + geom_boxplot()
+#+end_src
+
+#+RESULTS[9d137a245af52aeaa2a5041176c76eab71a582fb]:
+#+begin_org
+[[file:./resources/mpg_box1.png]]
+#+end_org
+
+Creating multiple boxes.
+
+#+begin_src R :results file graphics :file resources/mpg_box2.png
+plt <- ggplot(mpg, aes(x=manufacturer, y=hwy))
+plt +
+  geom_boxplot() +
+  theme(axis.text.x=element_text(angle=45, hjust=1))
+#+end_src
+
+#+RESULTS[2f8fd636677dbdd930e048a8254968e86c15e889]:
+#+begin_org
+[[file:./resources/mpg_box2.png]]
+#+end_org
+
+* Heatmaps
+
+Heatmap plots help visualize the relationship between one continuous numerical variable and two other variables (categorical or numerical).
+
+** Class and Year Summary
+
+#+begin_src R
+mpg_summary <- mpg %>%
+  group_by(class, year) %>%
+  summarize(Mean_Hwy=mean(hwy), .groups='keep')
+#+end_src
+
+#+RESULTS[4a3d0fb957fe3950600ce6379f833780831344ce]:
+#+begin_org
+| class      | year |         Mean_Hwy |
+|------------+------+------------------|
+| 2seater    | 1999 |             24.5 |
+| 2seater    | 2008 |               25 |
+| compact    | 1999 |            27.92 |
+| compact    | 2008 | 28.7272727272727 |
+| midsize    | 1999 |             26.5 |
+| midsize    | 2008 |  28.047619047619 |
+| minivan    | 1999 |             22.5 |
+| minivan    | 2008 |             22.2 |
+| pickup     | 1999 |          16.8125 |
+| pickup     | 2008 | 16.9411764705882 |
+| subcompact | 1999 |               29 |
+| subcompact | 2008 |           27.125 |
+| suv        | 1999 |  17.551724137931 |
+| suv        | 2008 | 18.6363636363636 |
+#+end_org
+
+Plotting heatmap.
+
+#+begin_src R :results file graphics :file resources/mpg_heatmap1.png
+plt <- ggplot(
+  mpg_summary,
+  aes(x=class, y=factor(year), fill=Mean_Hwy))
+plt + geom_tile() +
+  labs(
+    x="Vehicle Class",
+    y="Vehicle Year",
+    fill="Mean Highway (MPG)")
+#+end_src
+
+#+RESULTS[23aa34164c1df6681d07b3bddda358c364f213c8]:
+#+begin_org
+[[file:./resources/mpg_heatmap1.png]]
+#+end_org
+
+** Model and Year Summary
+
+#+begin_src R
+mpg_summary <- mpg %>%
+  group_by(model, year) %>%
+  summarize(Mean_Hwy=mean(hwy), .groups='keep')
+mpg_summary %>% head
+#+end_src
+
+#+RESULTS[b6555e6a21dfda6992784c25de3a645a1830ea71]:
+#+begin_org
+| model       | year |         Mean_Hwy |
+|-------------+------+------------------|
+| 4runner 4wd | 1999 |               19 |
+| 4runner 4wd | 2008 |             18.5 |
+| a4          | 1999 |             27.5 |
+| a4          | 2008 | 29.3333333333333 |
+| a4 quattro  | 1999 |            25.25 |
+| a4 quattro  | 2008 |            26.25 |
+#+end_org
+
+Adding labels to heatmap.
+
+#+begin_src R :results file graphics :file resources/mpg_heatmap2.png
+plt <- ggplot(
+  mpg_summary,
+  aes(
+    x=model,
+    y=factor(year),
+    fill=Mean_Hwy)
+)
+plt + geom_tile() +
+  labs(
+    x="Model",
+    y="Vehicle Year",
+    fill="Mean Highway(MPG)"
+) +
+  theme(
+    axis.text.x = element_text(
+      angle=90,
+      hjust=1,
+      vjust=0.5
+    )
+)
+#+end_src
+
+#+RESULTS[b39ccb450708271f42cea96aed53207c9c08f541]:
+#+begin_org
+[[file:./resources/mpg_heatmap2.png]]
+#+end_org
+
+We can always refer to the ggplot cheatsheet[fn:6].
+
+* Layered Plots
+
+There are two types of plot layers:
+
+1. Layering additional plots that use the same variables and input data as the original plot
+2. Layering of additional plots that use different but complementary data to the original plot
+
+#+begin_src R :results output
+plt <- ggplot(mpg, aes(x=manufacturer,y=hwy))
+#+end_src
+
+#+RESULTS[e8840d5e9f20af8e69ba3f5a57f9a3a3bde9c8f3]:
+#+begin_org
+#+end_org
+
+#+begin_src R :results file graphics :file resources/mpg_layer1.png
+plt + geom_boxplot() +
+  theme(axis.text.x=element_text(angle=45,hjust=1)) +
+  geom_point()
+#+end_src
+
+#+RESULTS[4547c936fa6ed05d1d405a3e8473e8f4f1f66b39]:
+#+begin_org
+[[file:./resources/mpg_layer1.png]]
+#+end_org
+
+By layering our data points on top of our boxplot, we can see the general distribution of values within each box as well as the number of data points.
+
+** Summary of Class
+
+#+begin_src R
+mpg_summary <- mpg %>%
+  group_by(class) %>%
+  summarize(Mean_Engine=mean(displ), .groups='keep')
+#+end_src
+
+#+RESULTS[a026b445cec45225d6f3809a7e97449579dc1637]:
+#+begin_org
+| class      |      Mean_Engine |
+|------------+------------------|
+| 2seater    |             6.16 |
+| compact    | 2.32553191489362 |
+| midsize    |  2.9219512195122 |
+| minivan    | 3.39090909090909 |
+| pickup     | 4.41818181818182 |
+| subcompact |             2.66 |
+| suv        | 4.45645161290323 |
+#+end_org
+
+Plotting scatter plot.
+
+#+begin_src R :results file graphics :file resources/mpg_layer2.png
+plt <-
+  ggplot(mpg_summary, aes(x=class,y=Mean_Engine))
+plt +
+  geom_point(size=4) +
+  labs(x="Vehicle Class",y="Mean Engine Size")
+#+end_src
+
+#+RESULTS[9d9fba247eb0991a49922c144ee60d98783ec5e4]:
+#+begin_org
+[[file:./resources/mpg_layer2.png]]
+#+end_org
+
+** Plotting Error Bars
+
+Summary of Mean and Standard Deviation of Vehicle Class.
+
+#+begin_src R
+mpg_summary <-
+  mpg %>%
+  group_by(class) %>%
+  summarize(Mean_Engine=mean(displ), SD_Engine=sd(displ), .groups='keep')
+#+end_src
+
+#+RESULTS[397d395322d0801babe0ff8e32df7f51897ea7fd]:
+#+begin_org
+| class      |      Mean_Engine |         SD_Engine |
+|------------+------------------+-------------------|
+| 2seater    |             6.16 | 0.531977443130815 |
+| compact    | 2.32553191489362 | 0.452273524927782 |
+| midsize    |  2.9219512195122 |  0.71850963637308 |
+| minivan    | 3.39090909090909 | 0.452668853478004 |
+| pickup     | 4.41818181818182 | 0.828573527762679 |
+| subcompact |             2.66 |  1.10245714869372 |
+| suv        | 4.45645161290323 |  1.06580547047714 |
+#+end_org
+
+Plotting.
+
+#+begin_src R :results file graphics :file resources/mpg_layer3.png
+plt <-
+  ggplot(mpg_summary, aes(x=class,y=Mean_Engine))
+plt +
+  geom_point(size=4) +
+  labs(x="Vehicle Class", y="Mean Engine Size") +
+  geom_errorbar(aes(ymin=Mean_Engine-SD_Engine, ymax=Mean_Engine+SD_Engine))
+#+end_src
+
+#+RESULTS[0f93ec712e1babeabfbf8cc42d7d71e5f83ce83b]:
+#+begin_org
+[[file:./resources/mpg_layer3.png]]
+#+end_org
+
+** Faceting
+
+Often when our data is in a long format, we want to avoid visualizing all data within a single plot. Rather, we want to plot all our measurements but keep each level (or category) of our grouping variable separate.
+
+Using gather for converting to long format.[fn:7]
+
+#+begin_src R
+mpg_long <-
+  mpg %>% gather(key="MPG_Type", value="Rating", c(cty,hwy))
+head(mpg_long)
+#+end_src
+
+#+RESULTS[4a5be599acf53415ffa40ea449c75f2e0b09f002]:
+#+begin_org
+| manufacturer | model | displ | year | cyl | trans      | drv | fl | class   | MPG_Type | Rating |
+|--------------+-------+-------+------+-----+------------+-----+----+---------+----------+--------|
+| audi         | a4    |   1.8 | 1999 |   4 | auto(l5)   | f   | p  | compact | cty      |     18 |
+| audi         | a4    |   1.8 | 1999 |   4 | manual(m5) | f   | p  | compact | cty      |     21 |
+| audi         | a4    |     2 | 2008 |   4 | manual(m6) | f   | p  | compact | cty      |     20 |
+| audi         | a4    |     2 | 2008 |   4 | auto(av)   | f   | p  | compact | cty      |     21 |
+| audi         | a4    |   2.8 | 1999 |   6 | auto(l5)   | f   | p  | compact | cty      |     16 |
+| audi         | a4    |   2.8 | 1999 |   6 | manual(m5) | f   | p  | compact | cty      |     18 |
+#+end_org
+
+Plotting many boxplots and coloring by MG type.
+#+begin_src R :results file graphics :file resources/mpg_faceting.png
+plt <-
+  ggplot(mpg_long, aes(x=manufacturer,y=Rating,color=MPG_Type))
+plt +
+  geom_boxplot() +
+  theme(axis.text.x=element_text(angle=45,hjust=1))
+#+end_src
+
+#+RESULTS[c6a35bcaa9607a1d186a342e6f2834c5f7dbbc98]:
+#+begin_org
+[[file:./resources/mpg_faceting.png]]
+#+end_org
+
+One solution would be to facet the different types of fuel efficiency within the visualization using the facet_wrap() function[fn:8].
+
+** Facet Wrap
+
+By faceting our boxplots by fuel-efficiency type, it's easier to make comparisons across manufacturers.
+
+#+begin_src R :results file graphics :file resources/mpg_facetwrap.png
+plt <-
+  ggplot(mpg_long,aes(x=manufacturer,y=Rating,color=MPG_Type))
+plt +
+  geom_boxplot() +
+  facet_wrap(vars(MPG_Type)) +
+  theme(axis.text.x=element_text(angle=45,hjust=1), legend.position = "none") +
+  xlab("Manufacturer")
+#+end_src
+
+#+RESULTS[f903243a9defe0cb6d952f6810dc24a0b89cc2ed]:
+#+begin_org
+[[file:./resources/mpg_facetwrap.png]]
+#+end_org
+
+
+
+
+* Footnotes
+[fn:8]https://ggplot2-book.org/facet.html
+
+[fn:7]https://tidyr.tidyverse.org/reference/gather.html
+[fn:6]https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf
+[fn:5]https://web.stanford.edu/class/cs109l/unrestricted/resources/google-style.html
+[fn:4]https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-R.html
+
+[fn:3]https://ggplot2.tidyverse.org/reference/geom_boxplot.html#aesthetics
+[fn:2]https://ggplot2.tidyverse.org/reference/geom_point.html#aesthetics
+
+[fn:1]https://ggplot2.tidyverse.org/reference/index.html
