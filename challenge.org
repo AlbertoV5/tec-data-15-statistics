@@ -4,6 +4,8 @@
 #+SETUPFILE: ./config/org-theme-alt.config
 #+SETUPFILE: ./config/org-header.config
 #+PROPERTY: header-args:R :session "inferior ESS" :results value table :colnames yes :wrap org :width 960 :height 640 :res 144
+#+OPTIONS: ^:nil
+#+OPTIONS: \n:t
 
 * Part 1: Predict MPG
 
@@ -113,15 +115,6 @@ Multiple R-squared:  0.7149,	Adjusted R-squared:  0.6825
 F-statistic: 22.07 on 5 and 44 DF,  p-value: 5.35e-11
 #+end_org
 
-
-** Linear Regression to Predict MPG
-
-1. screenshot of the output from the linear regression
-2. Which variables/coefficients provided a non-random amount of variance to the mpg values in the dataset?
-3. Is the slope of the linear model considered to be zero? Why or why not?
-4. Does this linear model predict mpg of MechaCar prototypes effectively? Why or why not?
-
-
 * Part 2: Trip Analysis Visualization
 
 #+NAME: load-2
@@ -191,11 +184,6 @@ lot_summary <-
 | Lot3              | 1496.14 | 1498.5 |   170.28612244898 |  13.0493724925369 |
 #+end_org
 
-**  Summary Statistics on Suspension Coils
-
-1. screenshots from your total_summary and lot_summary dataframes,
-2. The design specifications for the MechaCar suspension coils dictate that the variance of the suspension coils must not exceed 100 pounds per square inch. Does the current manufacturing data meet this design specification for all manufacturing lots in total and each lot individually? Why or why not?
-
 * Part 3: T-Tests on Suspension Coils
 
 In your MechaCarChallenge.RScript, write an RScript using the t.test() function to determine if the PSI across all manufacturing lots is statistically different from the population mean of 1,500 pounds per square inch.
@@ -204,18 +192,18 @@ In your MechaCarChallenge.RScript, write an RScript using the t.test() function 
 #+begin_src R :results output
 t.test(
   coildata$PSI,
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 #+end_src
 
-#+RESULTS[d3af7c2fbe494ae13586f6fd4a1828d1523c1e2d]: test-1
+#+RESULTS[8295c9198c0bfe52eea918515aace9cbd8489f09]: test-1
 #+begin_org
 
 	One Sample t-test
 
 data:  coildata$PSI
-t = -1.8931, df = 149, p-value = 0.06028
-alternative hypothesis: true mean is not equal to 1500
+t = 0, df = 149, p-value = 1
+alternative hypothesis: true mean is not equal to 1498.78
 95 percent confidence interval:
  1497.507 1500.053
 sample estimates:
@@ -232,18 +220,18 @@ t.test(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot1"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 #+end_src
 
-#+RESULTS[0c0124fb8e37714c44e4002d10bea20ceb771911]: test-2a
+#+RESULTS[01f2e150b9ab2ee98c6a99443bda93fbb66823d4]: test-2a
 #+begin_org
 
 	One Sample t-test
 
 data:  subset(coildata$PSI, coildata$Manufacturing_Lot == "Lot1")
-t = 0, df = 49, p-value = 1
-alternative hypothesis: true mean is not equal to 1500
+t = 8.7161, df = 49, p-value = 1.568e-11
+alternative hypothesis: true mean is not equal to 1498.78
 95 percent confidence interval:
  1499.719 1500.281
 sample estimates:
@@ -258,18 +246,18 @@ t.test(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot2"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 #+end_src
 
-#+RESULTS[d48b087622897e2d6ae23139593003a06b14f1d9]: test-2b
+#+RESULTS[96ce308ac0d856c470640c780a9f64a9f86c06b7]: test-2b
 #+begin_org
 
 	One Sample t-test
 
 data:  subset(coildata$PSI, coildata$Manufacturing_Lot == "Lot2")
-t = 0.51745, df = 49, p-value = 0.6072
-alternative hypothesis: true mean is not equal to 1500
+t = 3.6739, df = 49, p-value = 0.0005911
+alternative hypothesis: true mean is not equal to 1498.78
 95 percent confidence interval:
  1499.423 1500.977
 sample estimates:
@@ -284,18 +272,18 @@ t.test(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot3"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 #+end_src
 
-#+RESULTS[3dda183de13295984709db849c5dc7587f12eaa2]: test-2c
+#+RESULTS[f31749f33db386ae4788dd6288cb5924909d8730]: test-2c
 #+begin_org
 
 	One Sample t-test
 
 data:  subset(coildata$PSI, coildata$Manufacturing_Lot == "Lot3")
-t = -2.0916, df = 49, p-value = 0.04168
-alternative hypothesis: true mean is not equal to 1500
+t = -1.4305, df = 49, p-value = 0.1589
+alternative hypothesis: true mean is not equal to 1498.78
 95 percent confidence interval:
  1492.431 1499.849
 sample estimates:
@@ -303,27 +291,9 @@ mean of x
   1496.14
 #+end_org
 
+* Complete script
 
-** T-Tests on Suspension Coils
-
-then briefly summarize your interpretation and findings for the t-test results. Include screenshots of the t-test to support your summary.
-
-* Part 4: Comparing the MechaCar to the Competition
-
-Using your knowledge of R, design a statistical study to compare performance of the MechaCar vehicles against performance of vehicles from other manufacturers.
-
-Follow the instructions below to complete Deliverable 4.
-
-1. In your README, create a subheading ## Study Design: MechaCar vs Competition.
-2. Write a short description of a statistical study that can quantify how the MechaCar performs against the competition. In your study design, think critically about what metrics would be of interest to a consumer: for a few examples, cost, city or highway fuel efficiency, horse power, maintenance cost, or safety rating.
-3. In your description, address the following questions:
-
-- What metric or metrics are you going to test?
-- What is the null hypothesis or alternative hypothesis?
-- What statistical test would you use to test the hypothesis? And why?
-- What data is needed to run the statistical test?
-
-* Script
+Complete code for MechaCharChallenge.
 
 #+NAME: rscript
 #+begin_src R :eval no :tangle MechaCarChallenge.R
@@ -341,6 +311,6 @@ Follow the instructions below to complete Deliverable 4.
 #+end_src
 
 #+NAME: rscript2
-#+begin_src R :eval no :tangle MechaCarChallenge.RScript
+#+begin_src R :eval no :tangle :exports none MechaCarChallenge.RScript
 <<rscript>>
 #+end_src

@@ -1,4 +1,4 @@
-% Created 2022-10-13 Thu 20:13
+% Created 2022-10-13 Thu 20:26
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -29,8 +29,9 @@
 \tableofcontents
 
 
+
 \section{Part 1: Predict MPG}
-\label{sec:orgfc7ea8f}
+\label{sec:org7f48f8c}
 
 \begin{verbatim}
 library(dplyr)
@@ -39,7 +40,7 @@ library(tidyverse)
 \end{verbatim}
 
 \subsection{Import Data}
-\label{sec:orgf207c1f}
+\label{sec:orgfea95fb}
 
 \begin{verbatim}
 mpgcar <-
@@ -54,7 +55,7 @@ head(mpgcar)
 \begin{org}
 \begin{center}
 \begin{tabular}{rrrrrr}
-vehicle\textsubscript{length} & vehicle\textsubscript{weight} & spoiler\textsubscript{angle} & ground\textsubscript{clearance} & AWD & mpg\\
+vehicle\_length & vehicle\_weight & spoiler\_angle & ground\_clearance & AWD & mpg\\
 \hline
 14.69709536 & 6407.94647 & 48.78998258 & 14.64098303 & 1 & 49.04918045\\
 12.53420597 & 5182.080571 & 90 & 14.36667939 & 1 & 36.76606309\\
@@ -67,7 +68,7 @@ vehicle\textsubscript{length} & vehicle\textsubscript{weight} & spoiler\textsubs
 \end{org}
 
 \subsection{Linear regression}
-\label{sec:org6248a9c}
+\label{sec:orgb4e3d88}
 
 \begin{verbatim}
 lm(
@@ -83,15 +84,15 @@ lm(
 \begin{org}
 
 
-Call:
-lm(formula = mpg \textasciitilde{} vehicle\textsubscript{length} + vehicle\textsubscript{weight} + spoiler\textsubscript{angle} +
-    ground\textsubscript{clearance} + AWD, data = mpgcar)
+Call:\\
+lm(formula = mpg \textasciitilde{} vehicle\_length + vehicle\_weight + spoiler\_angle +\\
+    ground\_clearance + AWD, data = mpgcar)\\
 
-Coefficients:
-     (Intercept)    vehicle\textsubscript{length}    vehicle\textsubscript{weight}     spoiler\textsubscript{angle}
-      -1.040e+02         6.267e+00         1.245e-03         6.877e-02
-ground\textsubscript{clearance}               AWD
-       3.546e+00        -3.411e+00
+Coefficients:\\
+     (Intercept)    vehicle\_length    vehicle\_weight     spoiler\_angle\\
+      -1.040e+02         6.267e+00         1.245e-03         6.877e-02\\
+ground\_clearance               AWD\\
+       3.546e+00        -3.411e+00\\
 \end{org}
 
 \begin{verbatim}
@@ -110,44 +111,44 @@ summary(
 \begin{org}
 
 
-Call:
-lm(formula = mpg \textasciitilde{} vehicle\textsubscript{length} + vehicle\textsubscript{weight} + spoiler\textsubscript{angle} +
-    ground\textsubscript{clearance} + AWD, data = mpgcar)
+Call:\\
+lm(formula = mpg \textasciitilde{} vehicle\_length + vehicle\_weight + spoiler\_angle +\\
+    ground\_clearance + AWD, data = mpgcar)\\
 
-Residuals:
-     Min       1Q   Median       3Q      Max
--19.4701  -4.4994  -0.0692   5.4433  18.5849
+Residuals:\\
+     Min       1Q   Median       3Q      Max\\
+-19.4701  -4.4994  -0.0692   5.4433  18.5849\\
 
-Coefficients:
-                   Estimate Std. Error t value Pr(>|t|)
-(Intercept)      -1.040e+02  1.585e+01  -6.559 5.08e-08 \textbf{*}
-vehicle\textsubscript{length}    6.267e+00  6.553e-01   9.563 2.60e-12 \textbf{*}
-vehicle\textsubscript{weight}    1.245e-03  6.890e-04   1.807   0.0776 .
-spoiler\textsubscript{angle}     6.877e-02  6.653e-02   1.034   0.3069
-ground\textsubscript{clearance}  3.546e+00  5.412e-01   6.551 5.21e-08 \textbf{*}
-AWD              -3.411e+00  2.535e+00  -1.346   0.1852
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+Coefficients:\\
+                   Estimate Std. Error t value Pr(>|t|)\\
+(Intercept)      -1.040e+02  1.585e+01  -6.559 5.08e-08 \textbf{*}\\
+vehicle\_length    6.267e+00  6.553e-01   9.563 2.60e-12 \textbf{*}\\
+vehicle\_weight    1.245e-03  6.890e-04   1.807   0.0776 .\\
+spoiler\_angle     6.877e-02  6.653e-02   1.034   0.3069\\
+ground\_clearance  3.546e+00  5.412e-01   6.551 5.21e-08 \textbf{*}\\
+AWD              -3.411e+00  2.535e+00  -1.346   0.1852\\
+---\\
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1\\
 
-Residual standard error: 8.774 on 44 degrees of freedom
-Multiple R-squared:  0.7149,	Adjusted R-squared:  0.6825
-F-statistic: 22.07 on 5 and 44 DF,  p-value: 5.35e-11
+Residual standard error: 8.774 on 44 degrees of freedom\\
+Multiple R-squared:  0.7149,	Adjusted R-squared:  0.6825\\
+F-statistic: 22.07 on 5 and 44 DF,  p-value: 5.35e-11\\
 \end{org}
 
 
 \subsection{Linear Regression to Predict MPG}
-\label{sec:org3c2894e}
+\label{sec:org5eecd05}
 
 \begin{enumerate}
-\item screenshot of the output from the linear regression
-\item Which variables/coefficients provided a non-random amount of variance to the mpg values in the dataset?
-\item Is the slope of the linear model considered to be zero? Why or why not?
-\item Does this linear model predict mpg of MechaCar prototypes effectively? Why or why not?
+\item screenshot of the output from the linear regression\\
+\item Which variables/coefficients provided a non-random amount of variance to the mpg values in the dataset?\\
+\item Is the slope of the linear model considered to be zero? Why or why not?\\
+\item Does this linear model predict mpg of MechaCar prototypes effectively? Why or why not?\\
 \end{enumerate}
 
 
 \section{Part 2: Trip Analysis Visualization}
-\label{sec:orgd1085a7}
+\label{sec:org941adcf}
 
 \begin{verbatim}
 coildata <-
@@ -162,7 +163,7 @@ head(coildata)
 \begin{org}
 \begin{center}
 \begin{tabular}{llr}
-VehicleID & Manufacturing\textsubscript{Lot} & PSI\\
+VehicleID & Manufacturing\_Lot & PSI\\
 \hline
 V40858 & Lot1 & 1499\\
 V40607 & Lot1 & 1500\\
@@ -174,7 +175,7 @@ V17344 & Lot1 & 1501\\
 \end{center}
 \end{org}
 
-Write an RScript that creates a total\textsubscript{summary} dataframe using the summarize() function to get the mean, median, variance, and standard deviation of the suspension coil’s PSI column.
+Write an RScript that creates a total\_summary dataframe using the summarize() function to get the mean, median, variance, and standard deviation of the suspension coil’s PSI column.\\
 
 \begin{verbatim}
 total_summary <-
@@ -213,7 +214,7 @@ lot_summary <-
 \begin{org}
 \begin{center}
 \begin{tabular}{lrrrr}
-Manufacturing\textsubscript{Lot} & Mean & Median & Variance & SD\\
+Manufacturing\_Lot & Mean & Median & Variance & SD\\
 \hline
 Lot1 & 1500 & 1500 & 0.979591836734694 & 0.989743318610787\\
 Lot2 & 1500.2 & 1500 & 7.46938775510204 & 2.73301806710128\\
@@ -223,17 +224,17 @@ Lot3 & 1496.14 & 1498.5 & 170.28612244898 & 13.0493724925369\\
 \end{org}
 
 \subsection{Summary Statistics on Suspension Coils}
-\label{sec:org93fcf62}
+\label{sec:orgdee0d85}
 
 \begin{enumerate}
-\item screenshots from your total\textsubscript{summary} and lot\textsubscript{summary} dataframes,
-\item The design specifications for the MechaCar suspension coils dictate that the variance of the suspension coils must not exceed 100 pounds per square inch. Does the current manufacturing data meet this design specification for all manufacturing lots in total and each lot individually? Why or why not?
+\item screenshots from your total\_summary and lot\_summary dataframes,\\
+\item The design specifications for the MechaCar suspension coils dictate that the variance of the suspension coils must not exceed 100 pounds per square inch. Does the current manufacturing data meet this design specification for all manufacturing lots in total and each lot individually? Why or why not?\\
 \end{enumerate}
 
 \section{Part 3: T-Tests on Suspension Coils}
-\label{sec:orgd3c6cac}
+\label{sec:org9fe311d}
 
-In your MechaCarChallenge.RScript, write an RScript using the t.test() function to determine if the PSI across all manufacturing lots is statistically different from the population mean of 1,500 pounds per square inch.
+In your MechaCarChallenge.RScript, write an RScript using the t.test() function to determine if the PSI across all manufacturing lots is statistically different from the population mean of 1,500 pounds per square inch.\\
 
 \begin{verbatim}
 t.test(
@@ -245,19 +246,19 @@ t.test(
 \begin{org}
 
 
-One Sample t-test
+One Sample t-test\\
 
-data:  coildata\$PSI
-t = -1.8931, df = 149, p-value = 0.06028
-alternative hypothesis: true mean is not equal to 1500
-95 percent confidence interval:
- 1497.507 1500.053
-sample estimates:
-mean of x
-  1498.78
+data:  coildata\$PSI\\
+t = -1.8931, df = 149, p-value = 0.06028\\
+alternative hypothesis: true mean is not equal to 1500\\
+95 percent confidence interval:\\
+ 1497.507 1500.053\\
+sample estimates:\\
+mean of x\\
+  1498.78\\
 \end{org}
 
-Next, write three more RScripts in your MechaCarChallenge.RScript using the t.test() function and its subset() argument to determine if the PSI for each manufacturing lot is statistically different from the population mean of 1,500 pounds per square inch.
+Next, write three more RScripts in your MechaCarChallenge.RScript using the t.test() function and its subset() argument to determine if the PSI for each manufacturing lot is statistically different from the population mean of 1,500 pounds per square inch.\\
 
 \begin{verbatim}
 t.test(
@@ -272,16 +273,16 @@ t.test(
 \begin{org}
 
 
-One Sample t-test
+One Sample t-test\\
 
-data:  subset(coildata\$PSI, coildata\$Manufacturing\textsubscript{Lot} == ``Lot1'')
-t = 0, df = 49, p-value = 1
-alternative hypothesis: true mean is not equal to 1500
-95 percent confidence interval:
- 1499.719 1500.281
-sample estimates:
-mean of x
-     1500
+data:  subset(coildata\$PSI, coildata\$Manufacturing\_Lot == ``Lot1'')\\
+t = 0, df = 49, p-value = 1\\
+alternative hypothesis: true mean is not equal to 1500\\
+95 percent confidence interval:\\
+ 1499.719 1500.281\\
+sample estimates:\\
+mean of x\\
+     1500\\
 \end{org}
 
 \begin{verbatim}
@@ -297,16 +298,16 @@ t.test(
 \begin{org}
 
 
-One Sample t-test
+One Sample t-test\\
 
-data:  subset(coildata\$PSI, coildata\$Manufacturing\textsubscript{Lot} == ``Lot2'')
-t = 0.51745, df = 49, p-value = 0.6072
-alternative hypothesis: true mean is not equal to 1500
-95 percent confidence interval:
- 1499.423 1500.977
-sample estimates:
-mean of x
-   1500.2
+data:  subset(coildata\$PSI, coildata\$Manufacturing\_Lot == ``Lot2'')\\
+t = 0.51745, df = 49, p-value = 0.6072\\
+alternative hypothesis: true mean is not equal to 1500\\
+95 percent confidence interval:\\
+ 1499.423 1500.977\\
+sample estimates:\\
+mean of x\\
+   1500.2\\
 \end{org}
 
 \begin{verbatim}
@@ -322,44 +323,46 @@ t.test(
 \begin{org}
 
 
-One Sample t-test
+One Sample t-test\\
 
-data:  subset(coildata\$PSI, coildata\$Manufacturing\textsubscript{Lot} == ``Lot3'')
-t = -2.0916, df = 49, p-value = 0.04168
-alternative hypothesis: true mean is not equal to 1500
-95 percent confidence interval:
- 1492.431 1499.849
-sample estimates:
-mean of x
-  1496.14
+data:  subset(coildata\$PSI, coildata\$Manufacturing\_Lot == ``Lot3'')\\
+t = -2.0916, df = 49, p-value = 0.04168\\
+alternative hypothesis: true mean is not equal to 1500\\
+95 percent confidence interval:\\
+ 1492.431 1499.849\\
+sample estimates:\\
+mean of x\\
+  1496.14\\
 \end{org}
 
 
 \subsection{T-Tests on Suspension Coils}
-\label{sec:orgf8e82b6}
+\label{sec:orgb6caa46}
 
-then briefly summarize your interpretation and findings for the t-test results. Include screenshots of the t-test to support your summary.
+then briefly summarize your interpretation and findings for the t-test results. Include screenshots of the t-test to support your summary.\\
 
 \section{Part 4: Comparing the MechaCar to the Competition}
-\label{sec:org19131cf}
+\label{sec:org1f009c3}
 
-Using your knowledge of R, design a statistical study to compare performance of the MechaCar vehicles against performance of vehicles from other manufacturers.
+Using your knowledge of R, design a statistical study to compare performance of the MechaCar vehicles against performance of vehicles from other manufacturers.\\
 
-Follow the instructions below to complete Deliverable 4.
+Follow the instructions below to complete Deliverable 4.\\
 
 \begin{enumerate}
-\item In your README, create a subheading \#\# Study Design: MechaCar vs Competition.
-\item Write a short description of a statistical study that can quantify how the MechaCar performs against the competition. In your study design, think critically about what metrics would be of interest to a consumer: for a few examples, cost, city or highway fuel efficiency, horse power, maintenance cost, or safety rating.
-\item In your description, address the following questions:
+\item In your README, create a subheading \#\# Study Design: MechaCar vs Competition.\\
+\item Write a short description of a statistical study that can quantify how the MechaCar performs against the competition. In your study design, think critically about what metrics would be of interest to a consumer: for a few examples, cost, city or highway fuel efficiency, horse power, maintenance cost, or safety rating.\\
+\item In your description, address the following questions:\\
 
-\item What metric or metrics are you going to test?
-\item What is the null hypothesis or alternative hypothesis?
-\item What statistical test would you use to test the hypothesis? And why?
-\item What data is needed to run the statistical test?
+\item What metric or metrics are you going to test?\\
+\item What is the null hypothesis or alternative hypothesis?\\
+\item What statistical test would you use to test the hypothesis? And why?\\
+\item What data is needed to run the statistical test?\\
 \end{enumerate}
 
-\section{Script}
-\label{sec:orgcd67627}
+\section{Complete script}
+\label{sec:org53961b1}
+
+Complete code for MechaCharChallenge.\\
 
 \begin{verbatim}
 library(dplyr)
@@ -443,83 +446,6 @@ t.test(
 \end{verbatim}
 
 \begin{verbatim}
-library(dplyr)
-library(ggplot2)
-library(tidyverse)
-mpgcar <-
-  read.csv(
-    'MechaCar_mpg.csv',
-    check.names = F,
-    stringsAsFactors = F
-)
-head(mpgcar)
-lm(
-  mpg ~ vehicle_length +
-  vehicle_weight +
-  spoiler_angle +
-  ground_clearance +
-  AWD,
-  data = mpgcar
-)
-summary(
-  lm(
-    mpg ~ vehicle_length +
-    vehicle_weight +
-    spoiler_angle +
-    ground_clearance +
-    AWD,
-    data = mpgcar
-  )
-)
-coildata <-
-   read.csv(
-    'Suspension_Coil.csv',
-    check.names = F,
-    stringsAsFactors = F
-)
-head(coildata)
-total_summary <-
-  coildata %>%
-  summarize(
-    Mean=mean(PSI),
-    Median=median(PSI),
-    Variance=var(PSI),
-    SD=sd(PSI)
-)
-lot_summary <-
-  coildata %>%
-  group_by(Manufacturing_Lot) %>%
-  summarize(
-    Mean=mean(PSI),
-    Median=median(PSI),
-    Variance=var(PSI),
-    SD=sd(PSI),
-    .groups='keep'
-  )
-t.test(
-  coildata$PSI,
-  mu=1500
-)
-t.test(
-  subset(
-    coildata$PSI,
-    coildata$Manufacturing_Lot == "Lot1"
-  ),
-  mu=1500
-)
-t.test(
-  subset(
-    coildata$PSI,
-    coildata$Manufacturing_Lot == "Lot2"
-  ),
-  mu=1500
-)
-t.test(
-  subset(
-    coildata$PSI,
-    coildata$Manufacturing_Lot == "Lot3"
-  ),
-  mu=1500
-)
+<<rscript>>
 \end{verbatim}
 \end{document}

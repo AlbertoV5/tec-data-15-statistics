@@ -4,6 +4,7 @@
 #+SETUPFILE: ./config/org-theme-alt.config
 #+SETUPFILE: ./config/org-header.config
 #+PROPERTY: header-args:R :session "inferior ESS" :results value table :colnames yes :wrap org :width 640
+#+OPTIONS: ^:nil
 
 * MPG Dataset
 

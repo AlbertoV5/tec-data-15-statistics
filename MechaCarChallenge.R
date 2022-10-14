@@ -4,7 +4,7 @@ library(ggplot2)
 library(tidyverse)
 mpgcar <-
   read.csv(
-    'data/MechaCar_mpg.csv',
+    'MechaCar_mpg.csv',
     check.names = F,
     stringsAsFactors = F
 )
@@ -29,7 +29,7 @@ summary(
 )
 coildata <-
    read.csv(
-    'data/Suspension_Coil.csv',
+    'Suspension_Coil.csv',
     check.names = F,
     stringsAsFactors = F
 )
@@ -54,27 +54,27 @@ lot_summary <-
   )
 t.test(
   coildata$PSI,
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 t.test(
   subset(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot1"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 t.test(
   subset(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot2"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 t.test(
   subset(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot3"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 ## rscript ends here
