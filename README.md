@@ -1,17 +1,17 @@
-- [Statistical Analysis with R](#orgd26f736)
-  - [Linear Regression to Predict MPG](#org9e1248c)
-  - [Summary Statistics on Suspension Coils](#orgbc19066)
-  - [T-Tests on Suspension Coils](#org2ddbbfa)
-  - [Study Design: MechaCar vs Competition](#org53d8b47)
+- [Statistical Analysis with R](#orgabd6043)
+  - [Linear Regression to Predict MPG](#org8a2aa8d)
+  - [Summary Statistics on Suspension Coils](#org30cc2e9)
+  - [T-Tests on Suspension Coils](#orgda37555)
+  - [Study Design: MechaCar vs Competition](#orgf08e999)
 
 
 
-<a id="orgd26f736"></a>
+<a id="orgabd6043"></a>
 
 # Statistical Analysis with R
 
 
-<a id="org9e1248c"></a>
+<a id="org8a2aa8d"></a>
 
 ## Linear Regression to Predict MPG
 
@@ -28,7 +28,7 @@ When we call the summary we get our **p-value** and **multiple r-square**.
 3.  This model is effective on showing us which variables have the most impact (greater correlation) on the **Milles per Gallon** and which do not affect it as much, so now we can make decisions based on those predictions.
 
 
-<a id="orgbc19066"></a>
+<a id="org30cc2e9"></a>
 
 ## Summary Statistics on Suspension Coils
 
@@ -43,7 +43,7 @@ We can see that the total variance on the suspension coils is under 100 pounds p
 `Lot3` doesn&rsquo;t comply with the variance specification, as it&rsquo;s value is `170`, much higher than the required 100.
 
 
-<a id="org2ddbbfa"></a>
+<a id="orgda37555"></a>
 
 ## T-Tests on Suspension Coils
 
@@ -78,19 +78,123 @@ Then we can&rsquo;t validate it, so the null hypothesis would still stand.
 > The mean of the Lot3 will deviate from the population mean considerably when measured.
 
 
-<a id="org53d8b47"></a>
+<a id="orgf08e999"></a>
 
 ## Study Design: MechaCar vs Competition
 
-Using your knowledge of R, design a statistical study to compare performance of the MechaCar vehicles against performance of vehicles from other manufacturers.
+We want to test the MechaCar product at a larger scale so we should develop a set of tests to help us obtain insight and make predictions about the performance of the product in the market. This means that we have to compare against competitors and include on the consumer as a source for measurements.
 
-Follow the instructions below to complete Deliverable 4.
+We can start with a test to measure safety rating, which would consist of a controlled environment to perform tests on both the MechaCar and its competitors. The null hypothesis will be the following:
 
-1.  In your README, create a subheading ## Study Design: MechaCar vs Competition.
-2.  Write a short description of a statistical study that can quantify how the MechaCar performs against the competition. In your study design, think critically about what metrics would be of interest to a consumer: for a few examples, cost, city or highway fuel efficiency, horse power, maintenance cost, or safety rating.
-3.  In your description, address the following questions:
+> Given a set of terrains and crash scenarios, the MechaCar won&rsquo;t protect the passengers of the vehicle better than its competitors.
 
-4.  What metric or metrics are you going to test?
-5.  What is the null hypothesis or alternative hypothesis?
-6.  What statistical test would you use to test the hypothesis? And why?
-7.  What data is needed to run the statistical test?
+And the alternative hypothesis will be the following:
+
+> If we measure damages to test to dummy mannequins and interior of the MechaCar in different crash situations, it will perform better than its competitors in the majority of the tests.
+
+The measurements we can perform are speed of the vehicles, which will be continuous data, then ordinal data can be severity of the damage in mannequins and interior of the car. We can also measure the PSI on the tires as numerical data.
+
+Given that the number of tests can be scarce, we can do a multiple linear regression on the severity of the interior damage v.s. all the other variables.
+
+For example, given a few numerical variables and a few ordinal variables, we can find a relationship of how much each numerical data affects it. Then we can compare the MechaCar data to other vehicles and look for differences on variance and how consistent each sample is against the population.
+
+```R
+library(tidyverse)
+```
+
+```R
+# mock data
+data <- tibble(severity = 1:5, psi = 31:35, speed = 60 + 20*log(severity))
+```
+
+<div class="org" id="org4755e05">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-right" />
+
+<col  class="org-right" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">severity</th>
+<th scope="col" class="org-right">psi</th>
+<th scope="col" class="org-right">speed</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td class="org-right">1</td>
+<td class="org-right">31</td>
+<td class="org-right">60</td>
+</tr>
+
+
+<tr>
+<td class="org-right">2</td>
+<td class="org-right">32</td>
+<td class="org-right">73.8629436111989</td>
+</tr>
+
+
+<tr>
+<td class="org-right">3</td>
+<td class="org-right">33</td>
+<td class="org-right">81.9722457733622</td>
+</tr>
+
+
+<tr>
+<td class="org-right">4</td>
+<td class="org-right">34</td>
+<td class="org-right">87.7258872223978</td>
+</tr>
+
+
+<tr>
+<td class="org-right">5</td>
+<td class="org-right">35</td>
+<td class="org-right">92.188758248682</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+
+The previous data is just a mock to demonstrate how we could perform the tests with R and then use linear regression to find correlation and variance.
+
+```R
+summary(lm(severity ~ psi + speed, data=data))
+```
+
+    
+    Call:
+    lm(formula = severity ~ psi + speed, data = data)
+    
+    Residuals:
+             1          2          3          4          5
+    -2.408e-16  8.565e-16 -6.017e-16 -4.030e-16  3.890e-16
+    
+    Coefficients:
+                  Estimate Std. Error    t value Pr(>|t|)
+    (Intercept) -3.000e+01  2.777e-14 -1.080e+15   <2e-16 ***
+    psi          1.000e+00  1.180e-15  8.473e+14   <2e-16 ***
+    speed        5.456e-16  1.468e-16  3.716e+00   0.0654 .
+    ---
+    Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+    
+    Residual standard error: 8.566e-16 on 2 degrees of freedom
+    Multiple R-squared:      1,	Adjusted R-squared:      1
+    F-statistic: 6.815e+30 on 2 and 2 DF,  p-value: < 2.2e-16
+    
+    Warning message:
+    In summary.lm(lm(severity ~ psi + speed, data = data)) :
+      essentially perfect fit: summary may be unreliable
+
+The test will gain relevance if we measure more variables of the environment and the state of the cars as well as including the competition.
+
+The null hypothesis will be negated if the MechaCar performs better and there is less interior damage than its competitors in a majority of the scenarios.

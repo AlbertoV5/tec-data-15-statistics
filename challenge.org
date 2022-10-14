@@ -9,6 +9,10 @@
 
 * Part 1: Predict MPG
 
+This document is a complementary writeup done in the stye of "literate programming" for writing the R code and gathering the results.
+
+For the report, go to [[./readme.org]] or README.md.
+
 #+NAME: import-1
 #+begin_src R :results silent
 library(dplyr)
