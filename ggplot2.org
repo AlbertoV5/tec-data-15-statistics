@@ -1,5 +1,5 @@
-#+title: R and Statistics
-#+subtitle: Learning R and Statistics.
+#+title: R ggplot2 Notes
+#+subtitle: Learning R, statistics and ggplot2
 #+author: Alberto Valdez
 #+SETUPFILE: ./config/org-theme-alt.config
 #+SETUPFILE: ./config/org-header.config
@@ -310,12 +310,13 @@ There are two types of plot layers:
 1. Layering additional plots that use the same variables and input data as the original plot
 2. Layering of additional plots that use different but complementary data to the original plot
 
-#+begin_src R :results output
+#+begin_src R
 plt <- ggplot(mpg, aes(x=manufacturer,y=hwy))
 #+end_src
 
-#+RESULTS[e8840d5e9f20af8e69ba3f5a57f9a3a3bde9c8f3]:
+#+RESULTS[3f1b1deac91a756b1126a97522b6aa42284137e5]:
 #+begin_org
+|---|
 #+end_org
 
 #+begin_src R :results file graphics :file resources/mpg_layer1.png
@@ -466,6 +467,24 @@ plt +
 [[file:./resources/mpg_facetwrap.png]]
 #+end_org
 
+Using multiple variables for facet wrap can lead to too many different figures.
+
+#+begin_src R :results file graphics :file resources/mpg_facetwrap2.png
+plt <-
+  ggplot(mpg_long, aes(x=class, y=Rating, color=class))
+plt +
+  geom_boxplot() +
+  facet_wrap(vars(class)) +
+  theme(
+    axis.text.x=element_text(angle=45,hjust=1),
+    legend.position = "none") +
+  xlab("Class")
+#+end_src
+
+#+RESULTS[c24bb0736c5eb2b0e160f7ec4813f20a65163a26]:
+#+begin_org
+[[file:./resources/mpg_facetwrap2.png]]
+#+end_org
 
 
 

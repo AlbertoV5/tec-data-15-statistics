@@ -1,4 +1,4 @@
-% Created 2022-10-13 Thu 14:34
+% Created 2022-10-13 Thu 15:40
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -14,11 +14,11 @@
 \usepackage{hyperref}
 \author{Alberto Valdez}
 \date{\today}
-\title{R and Statistics\\\medskip
-\large Learning R and Statistics.}
+\title{R ggplot2 Notes\\\medskip
+\large Learning R, statistics and ggplot2}
 \hypersetup{
  pdfauthor={Alberto Valdez},
- pdftitle={R and Statistics},
+ pdftitle={R ggplot2 Notes},
  pdfkeywords={},
  pdfsubject={},
  pdfcreator={Emacs 28.1 (Org mode 9.6)}, 
@@ -29,9 +29,8 @@
 \tableofcontents
 
 
-
 \section{MPG Dataset}
-\label{sec:org05f2caf}
+\label{sec:org8946e3c}
 
 Learning R with Emacs.\footnote{\url{https://orgmode.org/worg/org-contrib/babel/languages/ob-doc-R.html}} Trying to follow Google's R style guide. \footnote{\url{https://web.stanford.edu/class/cs109l/unrestricted/resources/google-style.html}}
 
@@ -62,7 +61,7 @@ audi & a4 & 2.8 & 1999 & 6 & manual(m5) & f & 18 & 26 & p & compact\\
 \end{org}
 
 \subsection{Plotting bars.}
-\label{sec:org03f41d9}
+\label{sec:orgb18b0f4}
 
 \begin{verbatim}
 plt <- ggplot(mpg, aes(x=class))
@@ -94,7 +93,7 @@ plt + geom_col()
 More info at the ggplot2 docs\footnote{\url{https://ggplot2.tidyverse.org/reference/index.html}}.
 
 \subsection{Formatting output}
-\label{sec:org880347f}
+\label{sec:org8efb858}
 
 Adding labels and themes.
 
@@ -112,10 +111,10 @@ plt + geom_col() +
 \end{org}
 
 \section{MPG Summary}
-\label{sec:org644a67c}
+\label{sec:org5770c54}
 
 \subsection{Summary Table}
-\label{sec:orgc89d1d2}
+\label{sec:org4abd7cb}
 
 \begin{verbatim}
 mpg_summary <-
@@ -152,7 +151,7 @@ plt + geom_line() +
 \end{org}
 
 \subsection{Mpg dataset}
-\label{sec:orgbdc0c29}
+\label{sec:orgaaad840}
 
 Import into ggplot and plot data with formatting.
 
@@ -219,7 +218,7 @@ plt + geom_point() +
 Although there is no technical limit to the number of variables we can add to a ggplot figure, there are diminishing returns. A good rule of thumb is to limit the number of variables displayed in a single figure to a maximum of 3 or 4.
 
 \section{Boxplot}
-\label{sec:orgb045f23}
+\label{sec:org05e5add}
 
 Unlike the previous ggplot objects, geom\textsubscript{boxplot}()expects a numeric vector assigned to the y-value\footnote{\url{https://ggplot2.tidyverse.org/reference/geom\_boxplot.html\#aesthetics}}.
 
@@ -250,12 +249,12 @@ plt +
 \end{org}
 
 \section{Heatmaps}
-\label{sec:orgc2dc5b6}
+\label{sec:org74e59e4}
 
 Heatmap plots help visualize the relationship between one continuous numerical variable and two other variables (categorical or numerical).
 
 \subsection{Class and Year Summary}
-\label{sec:org9b2eee7}
+\label{sec:org7a11ba3}
 
 \begin{verbatim}
 mpg_summary <- mpg %>%
@@ -306,7 +305,7 @@ plt + geom_tile() +
 \end{org}
 
 \subsection{Model and Year Summary}
-\label{sec:org839ef2f}
+\label{sec:org6b768b5}
 
 \begin{verbatim}
 mpg_summary <- mpg %>%
@@ -364,7 +363,7 @@ plt + geom_tile() +
 We can always refer to the ggplot cheatsheet\footnote{\url{https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf}}.
 
 \section{Layered Plots}
-\label{sec:orga893155}
+\label{sec:org78f78d9}
 
 There are two types of plot layers:
 
@@ -378,6 +377,11 @@ plt <- ggplot(mpg, aes(x=manufacturer,y=hwy))
 \end{verbatim}
 
 \begin{org}
+\begin{center}
+\begin{tabular}{}
+\hline
+\end{tabular}
+\end{center}
 \end{org}
 
 \begin{verbatim}
@@ -395,7 +399,7 @@ plt + geom_boxplot() +
 By layering our data points on top of our boxplot, we can see the general distribution of values within each box as well as the number of data points.
 
 \subsection{Summary of Class}
-\label{sec:orgf6865e8}
+\label{sec:org5cac4ed}
 
 \begin{verbatim}
 mpg_summary <- mpg %>%
@@ -432,6 +436,137 @@ plt +
 \begin{org}
 \begin{center}
 \includegraphics[width=.9\linewidth]{./resources/mpg_layer2.png}
+\end{center}
+\end{org}
+
+\subsection{Plotting Error Bars}
+\label{sec:orgad1a2b4}
+
+Summary of Mean and Standard Deviation of Vehicle Class.
+
+\begin{verbatim}
+mpg_summary <-
+  mpg %>%
+  group_by(class) %>%
+  summarize(Mean_Engine=mean(displ), SD_Engine=sd(displ), .groups='keep')
+\end{verbatim}
+
+\begin{org}
+\begin{center}
+\begin{tabular}{lrr}
+class & Mean\textsubscript{Engine} & SD\textsubscript{Engine}\\
+\hline
+2seater & 6.16 & 0.531977443130815\\
+compact & 2.32553191489362 & 0.452273524927782\\
+midsize & 2.9219512195122 & 0.71850963637308\\
+minivan & 3.39090909090909 & 0.452668853478004\\
+pickup & 4.41818181818182 & 0.828573527762679\\
+subcompact & 2.66 & 1.10245714869372\\
+suv & 4.45645161290323 & 1.06580547047714\\
+\end{tabular}
+\end{center}
+\end{org}
+
+Plotting.
+
+\begin{verbatim}
+plt <-
+  ggplot(mpg_summary, aes(x=class,y=Mean_Engine))
+plt +
+  geom_point(size=4) +
+  labs(x="Vehicle Class", y="Mean Engine Size") +
+  geom_errorbar(aes(ymin=Mean_Engine-SD_Engine, ymax=Mean_Engine+SD_Engine))
+\end{verbatim}
+
+\begin{org}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/mpg_layer3.png}
+\end{center}
+\end{org}
+
+\subsection{Faceting}
+\label{sec:orgbc3641c}
+
+Often when our data is in a long format, we want to avoid visualizing all data within a single plot. Rather, we want to plot all our measurements but keep each level (or category) of our grouping variable separate.
+
+Using gather for converting to long format.\footnote{\url{https://tidyr.tidyverse.org/reference/gather.html}}
+
+\begin{verbatim}
+mpg_long <-
+  mpg %>% gather(key="MPG_Type", value="Rating", c(cty,hwy))
+head(mpg_long)
+\end{verbatim}
+
+\begin{org}
+\begin{center}
+\begin{tabular}{llrrrlllllr}
+manufacturer & model & displ & year & cyl & trans & drv & fl & class & MPG\textsubscript{Type} & Rating\\
+\hline
+audi & a4 & 1.8 & 1999 & 4 & auto(l5) & f & p & compact & cty & 18\\
+audi & a4 & 1.8 & 1999 & 4 & manual(m5) & f & p & compact & cty & 21\\
+audi & a4 & 2 & 2008 & 4 & manual(m6) & f & p & compact & cty & 20\\
+audi & a4 & 2 & 2008 & 4 & auto(av) & f & p & compact & cty & 21\\
+audi & a4 & 2.8 & 1999 & 6 & auto(l5) & f & p & compact & cty & 16\\
+audi & a4 & 2.8 & 1999 & 6 & manual(m5) & f & p & compact & cty & 18\\
+\end{tabular}
+\end{center}
+\end{org}
+
+Plotting many boxplots and coloring by MG type.
+\begin{verbatim}
+plt <-
+  ggplot(mpg_long, aes(x=manufacturer,y=Rating,color=MPG_Type))
+plt +
+  geom_boxplot() +
+  theme(axis.text.x=element_text(angle=45,hjust=1))
+\end{verbatim}
+
+\begin{org}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/mpg_faceting.png}
+\end{center}
+\end{org}
+
+One solution would be to facet the different types of fuel efficiency within the visualization using the facet\textsubscript{wrap}() function\footnote{\url{https://ggplot2-book.org/facet.html}}.
+
+\subsection{Facet Wrap}
+\label{sec:org9c517c6}
+
+By faceting our boxplots by fuel-efficiency type, it's easier to make comparisons across manufacturers.
+
+\begin{verbatim}
+plt <-
+  ggplot(mpg_long,aes(x=manufacturer,y=Rating,color=MPG_Type))
+plt +
+  geom_boxplot() +
+  facet_wrap(vars(MPG_Type)) +
+  theme(axis.text.x=element_text(angle=45,hjust=1), legend.position = "none") +
+  xlab("Manufacturer")
+\end{verbatim}
+
+\begin{org}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/mpg_facetwrap.png}
+\end{center}
+\end{org}
+
+Using multiple variables for facet wrap can lead to too many different figures.
+
+\begin{verbatim}
+plt <-
+  ggplot(mpg_long, aes(x=class, y=Rating, color=class))
+plt +
+  geom_boxplot() +
+  facet_wrap(vars(class)) +
+  theme(
+    axis.text.x=element_text(angle=45,hjust=1),
+    legend.position = "none") +
+  xlab("Class")
+\end{verbatim}
+
+\begin{org}
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/mpg_facetwrap2.png}
 \end{center}
 \end{org}
 \end{document}
