@@ -1,103 +1,141 @@
-#+title: Readme
-#+subtitle: Statistical Analysis with R
-#+author: Alberto Valdez
-#+SETUPFILE: ./config/org-theme-alt.config
-#+SETUPFILE: ./config/org-header.config
-#+PROPERTY: header-args:R :session "inferior ESS" :results value table :colnames yes :wrap org :width 960 :height 640 :res 144
-#+OPTIONS: ^:nil
+% Created 2022-10-13 Thu 23:26
+% Intended LaTeX compiler: pdflatex
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{capt-of}
+\usepackage{hyperref}
+\author{Alberto Valdez}
+\date{\today}
+\title{Readme\\\medskip
+\large Statistical Analysis with R}
+\hypersetup{
+ pdfauthor={Alberto Valdez},
+ pdftitle={Readme},
+ pdfkeywords={},
+ pdfsubject={},
+ pdfcreator={Emacs 28.1 (Org mode 9.6)}, 
+ pdflang={English}}
+\begin{document}
 
-* Statistical Analysis with R
+\maketitle
+\tableofcontents
+
+
+\section{Statistical Analysis with R}
+\label{sec:org46c7723}
 
 In this analysis we will perform multiple tests for finding flaws in the production line of the MechaCar for the CarsRUs company. Then we will propose more tests for the future.
 
-** Linear Regression to Predict MPG
+\subsection{Linear Regression to Predict MPG}
+\label{sec:org87e7c72}
 
 The first linear regression gives us the following results.
 
-#+attr_html: :width 500px
-[[./resources/_r_1.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_1.png}
+\end{center}
 
-When we call the summary we get our *p-value* and *multiple r-square*.
+When we call the summary we get our \textbf{p-value} and \textbf{multiple r-square}.
 
-#+attr_html: :width 500px
-[[./resources/_r_1b.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_1b.png}
+\end{center}
 
-1. The coefficients that provide a non-random amount of variance are: vehicle_length and ground_clearance (as well as the Intercept) because their *Pr(>|t|)* value is very small.
-2. The slope is not considered zero because the *r-squared* value is 0.7149, which means the relationship is linear. If we were to plot a line, it would be almost completely perpendicular to both axis.
-3. This model is effective on showing us which variables have the most impact (greater correlation) on the *Milles per Gallon* and which do not affect it as much, so now we can make decisions based on those predictions.
+\begin{enumerate}
+\item The coefficients that provide a non-random amount of variance are: vehicle\_length and ground\_clearance (as well as the Intercept) because their \textbf{Pr(>|t|)} value is very small.
+\item The slope is not considered zero because the \textbf{r-squared} value is 0.7149, which means the relationship is linear. If we were to plot a line, it would be almost completely perpendicular to both axis.
+\item This model is effective on showing us which variables have the most impact (greater correlation) on the \textbf{Milles per Gallon} and which do not affect it as much, so now we can make decisions based on those predictions.
+\end{enumerate}
 
 
-**  Summary Statistics on Suspension Coils
+\subsection{Summary Statistics on Suspension Coils}
+\label{sec:org4a82521}
 
 These are both summaries on the suspension coils.
 
-#+attr_html: :width 500px
-[[./resources/_r_2.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_2.png}
+\end{center}
 
-We can see that the total variance on the suspension coils is under 100 pounds per square inch, as per the design specifications. However, when we look at the lots *individually*, we can see that there is a problem with =Lot3=.
+We can see that the total variance on the suspension coils is under 100 pounds per square inch, as per the design specifications. However, when we look at the lots \textbf{individually}, we can see that there is a problem with \texttt{Lot3}.
 
-#+attr_html: :width 500px
-[[./resources/_r_2b.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_2b.png}
+\end{center}
 
-=Lot3= doesn't comply with the variance specification, as it's value is =170=, much higher than the required 100.
+\texttt{Lot3} doesn't comply with the variance specification, as it's value is \texttt{170}, much higher than the required 100.
 
 
-** T-Tests on Suspension Coils
+\subsection{T-Tests on Suspension Coils}
+\label{sec:orgf43d608}
 
 The following tests are made to assert that the mean of each sample is apoximates the population mean. We can verify the measure in our summary table that we have already calculated.
 
-If we compare the mean of the population against itself, we will get a *p-value* of =1= because the ratio is perfect.
+If we compare the mean of the population against itself, we will get a \textbf{p-value} of \texttt{1} because the ratio is perfect.
 
-#+attr_html: :width 500px
-[[./resources/_r_3a.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_3a.png}
+\end{center}
 
-However, when doing *one-sample-t-test* for each of the lots, we get a more revealing picture.
+However, when doing \textbf{one-sample-t-test} for each of the lots, we get a more revealing picture.
 
 Lot1 T-Test
 
-#+attr_html: :width 500px
-[[./resources/_r_3b.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_3b.png}
+\end{center}
 
 Lot2 T-Test
 
-#+attr_html: :width 500px
-[[./resources/_r_3c.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_3c.png}
+\end{center}
 
 Lot3 T-Test
 
-#+attr_html: :width 500px
-[[./resources/_r_3d.png]]
+\begin{center}
+\includegraphics[width=.9\linewidth]{./resources/_r_3d.png}
+\end{center}
 
-We can see that the *p-value* on =Lot1= and =Lot2= are within the confidence interval, but the value for =Lot3= which is equal to =0.1589= is not, which means this sample deviates from the mean of the population more than we would like it to be.
+We can see that the \textbf{p-value} on \texttt{Lot1} and \texttt{Lot2} are within the confidence interval, but the value for \texttt{Lot3} which is equal to \texttt{0.1589} is not, which means this sample deviates from the mean of the population more than we would like it to be.
 
 If our alternative hypothesis is the following:
 
-#+begin_quote
+\begin{quote}
 If we measure the mean of the Lot3, it should not deviate from the mean of the population considerably.
-#+end_quote
+\end{quote}
 
 Then we can't validate it, so the null hypothesis would still stand.
 
-#+begin_quote
+\begin{quote}
 The mean of the Lot3 will deviate from the population mean considerably when measured.
-#+end_quote
+\end{quote}
 
-** Study Design: MechaCar vs Competition
+\subsection{Study Design: MechaCar vs Competition}
+\label{sec:org7ab7dfe}
 
 
 We want to test the MechaCar product at a larger scale so we should develop a set of tests to help us obtain insight and make predictions about the performance of the product in the market. This means that we have to compare against competitors and include on the consumer as a source for measurements.
 
 We can start with a test to measure safety rating, which would consist of a controlled environment to perform tests on both the MechaCar and its competitors. The null hypothesis will be the following:
 
-#+begin_quote
+\begin{quote}
 Given a set of terrains and crash scenarios, the MechaCar won't protect the passengers of the vehicle better than its competitors.
-#+end_quote
+\end{quote}
 
 And the alternative hypothesis will be the following:
 
-#+begin_quote
+\begin{quote}
 If we measure damages to test to dummy mannequins and interior of the MechaCar in different crash situations, it will perform better than its competitors in the majority of the tests.
-#+end_quote
+\end{quote}
 
 The measurements we can perform are speed of the vehicles, which will be continuous data, then ordinal data can be severity of the damage in mannequins and interior of the car. We can also measure the PSI on the tires as numerical data.
 
@@ -105,34 +143,36 @@ Given that the number of tests can be scarce, we can do a multiple linear regres
 
 For example, given a few numerical variables and a few ordinal variables, we can find a relationship of how much each numerical data affects it. Then we can compare the MechaCar data to other vehicles and look for differences on variance and how consistent each sample is against the population.
 
-#+begin_src R :results silent
+\begin{verbatim}
 library(tidyverse)
-#+end_src
+\end{verbatim}
 
-#+begin_src R
+\begin{verbatim}
 # mock data
 data <- tibble(severity = 1:5, psi = 31:35, speed = 60 + 20*log(severity))
-#+end_src
+\end{verbatim}
 
-#+RESULTS[e4a12ae49b30e306f9edec36c5d4eb1ca9b25d2d]:
-#+begin_org
-| severity | psi |            speed |
-|----------+-----+------------------|
-|        1 |  31 |               60 |
-|        2 |  32 | 73.8629436111989 |
-|        3 |  33 | 81.9722457733622 |
-|        4 |  34 | 87.7258872223978 |
-|        5 |  35 |  92.188758248682 |
-#+end_org
+\begin{org}
+\begin{center}
+\begin{tabular}{rrr}
+severity & psi & speed\\
+\hline
+1 & 31 & 60\\
+2 & 32 & 73.8629436111989\\
+3 & 33 & 81.9722457733622\\
+4 & 34 & 87.7258872223978\\
+5 & 35 & 92.188758248682\\
+\end{tabular}
+\end{center}
+\end{org}
 
 The previous data is just a mock to demonstrate how we could perform the tests with R and then use linear regression to find correlation and variance.
 
-#+begin_src R :results output :wrap example
+\begin{verbatim}
 summary(lm(severity ~ psi + speed, data=data))
-#+end_src
+\end{verbatim}
 
-#+RESULTS[1e83367142647712783f36cc4f3a92f048beba26]:
-#+begin_example
+\begin{verbatim}
 
 Call:
 lm(formula = severity ~ psi + speed, data = data)
@@ -156,8 +196,9 @@ F-statistic: 6.815e+30 on 2 and 2 DF,  p-value: < 2.2e-16
 Warning message:
 In summary.lm(lm(severity ~ psi + speed, data = data)) :
   essentially perfect fit: summary may be unreliable
-#+end_example
+\end{verbatim}
 
 The test will gain relevance if we measure more variables of the environment and the state of the cars as well as including the competition.
 
 The null hypothesis will be negated if the MechaCar performs better and there is less interior damage than its competitors in a majority of the scenarios.
+\end{document}

@@ -1,17 +1,19 @@
-- [Statistical Analysis with R](#orgabd6043)
-  - [Linear Regression to Predict MPG](#org8a2aa8d)
-  - [Summary Statistics on Suspension Coils](#org30cc2e9)
-  - [T-Tests on Suspension Coils](#orgda37555)
-  - [Study Design: MechaCar vs Competition](#orgf08e999)
+- [Statistical Analysis with R](#org4966f21)
+  - [Linear Regression to Predict MPG](#org16d1da9)
+  - [Summary Statistics on Suspension Coils](#org166bd75)
+  - [T-Tests on Suspension Coils](#org6429dbc)
+  - [Study Design: MechaCar vs Competition](#org3f6f163)
 
 
 
-<a id="orgabd6043"></a>
+<a id="org4966f21"></a>
 
 # Statistical Analysis with R
 
+In this analysis we will perform multiple tests for finding flaws in the production line of the MechaCar for the CarsRUs company. Then we will propose more tests for the future.
 
-<a id="org8a2aa8d"></a>
+
+<a id="org16d1da9"></a>
 
 ## Linear Regression to Predict MPG
 
@@ -28,7 +30,7 @@ When we call the summary we get our **p-value** and **multiple r-square**.
 3.  This model is effective on showing us which variables have the most impact (greater correlation) on the **Milles per Gallon** and which do not affect it as much, so now we can make decisions based on those predictions.
 
 
-<a id="org30cc2e9"></a>
+<a id="org166bd75"></a>
 
 ## Summary Statistics on Suspension Coils
 
@@ -43,7 +45,7 @@ We can see that the total variance on the suspension coils is under 100 pounds p
 `Lot3` doesn&rsquo;t comply with the variance specification, as it&rsquo;s value is `170`, much higher than the required 100.
 
 
-<a id="orgda37555"></a>
+<a id="org6429dbc"></a>
 
 ## T-Tests on Suspension Coils
 
@@ -78,7 +80,7 @@ Then we can&rsquo;t validate it, so the null hypothesis would still stand.
 > The mean of the Lot3 will deviate from the population mean considerably when measured.
 
 
-<a id="orgf08e999"></a>
+<a id="org3f6f163"></a>
 
 ## Study Design: MechaCar vs Competition
 
@@ -107,7 +109,7 @@ library(tidyverse)
 data <- tibble(severity = 1:5, psi = 31:35, speed = 60 + 20*log(severity))
 ```
 
-<div class="org" id="org4755e05">
+<div class="org" id="orgd698964">
 <table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
 
 
