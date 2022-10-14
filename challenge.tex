@@ -1,4 +1,4 @@
-% Created 2022-10-13 Thu 20:26
+% Created 2022-10-13 Thu 22:47
 % Intended LaTeX compiler: pdflatex
 \documentclass[11pt]{article}
 \usepackage[utf8]{inputenc}
@@ -29,9 +29,12 @@
 \tableofcontents
 
 
-
 \section{Part 1: Predict MPG}
-\label{sec:org7f48f8c}
+\label{sec:orgd397256}
+
+This document is a complementary writeup done in the stye of ``literate programming'' for writing the R code and gathering the results.\\
+
+For the report, go to \url{./readme.org} or README.md.\\
 
 \begin{verbatim}
 library(dplyr)
@@ -40,7 +43,7 @@ library(tidyverse)
 \end{verbatim}
 
 \subsection{Import Data}
-\label{sec:orgfea95fb}
+\label{sec:orge619fc2}
 
 \begin{verbatim}
 mpgcar <-
@@ -68,7 +71,7 @@ vehicle\_length & vehicle\_weight & spoiler\_angle & ground\_clearance & AWD & m
 \end{org}
 
 \subsection{Linear regression}
-\label{sec:orgb4e3d88}
+\label{sec:orgd80262c}
 
 \begin{verbatim}
 lm(
@@ -135,20 +138,8 @@ Multiple R-squared:  0.7149,	Adjusted R-squared:  0.6825\\
 F-statistic: 22.07 on 5 and 44 DF,  p-value: 5.35e-11\\
 \end{org}
 
-
-\subsection{Linear Regression to Predict MPG}
-\label{sec:org5eecd05}
-
-\begin{enumerate}
-\item screenshot of the output from the linear regression\\
-\item Which variables/coefficients provided a non-random amount of variance to the mpg values in the dataset?\\
-\item Is the slope of the linear model considered to be zero? Why or why not?\\
-\item Does this linear model predict mpg of MechaCar prototypes effectively? Why or why not?\\
-\end{enumerate}
-
-
 \section{Part 2: Trip Analysis Visualization}
-\label{sec:org941adcf}
+\label{sec:org9d7923a}
 
 \begin{verbatim}
 coildata <-
@@ -223,23 +214,15 @@ Lot3 & 1496.14 & 1498.5 & 170.28612244898 & 13.0493724925369\\
 \end{center}
 \end{org}
 
-\subsection{Summary Statistics on Suspension Coils}
-\label{sec:orgdee0d85}
-
-\begin{enumerate}
-\item screenshots from your total\_summary and lot\_summary dataframes,\\
-\item The design specifications for the MechaCar suspension coils dictate that the variance of the suspension coils must not exceed 100 pounds per square inch. Does the current manufacturing data meet this design specification for all manufacturing lots in total and each lot individually? Why or why not?\\
-\end{enumerate}
-
 \section{Part 3: T-Tests on Suspension Coils}
-\label{sec:org9fe311d}
+\label{sec:org1cfc598}
 
 In your MechaCarChallenge.RScript, write an RScript using the t.test() function to determine if the PSI across all manufacturing lots is statistically different from the population mean of 1,500 pounds per square inch.\\
 
 \begin{verbatim}
 t.test(
   coildata$PSI,
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 \end{verbatim}
 
@@ -249,8 +232,8 @@ t.test(
 One Sample t-test\\
 
 data:  coildata\$PSI\\
-t = -1.8931, df = 149, p-value = 0.06028\\
-alternative hypothesis: true mean is not equal to 1500\\
+t = 0, df = 149, p-value = 1\\
+alternative hypothesis: true mean is not equal to 1498.78\\
 95 percent confidence interval:\\
  1497.507 1500.053\\
 sample estimates:\\
@@ -266,7 +249,7 @@ t.test(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot1"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 \end{verbatim}
 
@@ -276,8 +259,8 @@ t.test(
 One Sample t-test\\
 
 data:  subset(coildata\$PSI, coildata\$Manufacturing\_Lot == ``Lot1'')\\
-t = 0, df = 49, p-value = 1\\
-alternative hypothesis: true mean is not equal to 1500\\
+t = 8.7161, df = 49, p-value = 1.568e-11\\
+alternative hypothesis: true mean is not equal to 1498.78\\
 95 percent confidence interval:\\
  1499.719 1500.281\\
 sample estimates:\\
@@ -291,7 +274,7 @@ t.test(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot2"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 \end{verbatim}
 
@@ -301,8 +284,8 @@ t.test(
 One Sample t-test\\
 
 data:  subset(coildata\$PSI, coildata\$Manufacturing\_Lot == ``Lot2'')\\
-t = 0.51745, df = 49, p-value = 0.6072\\
-alternative hypothesis: true mean is not equal to 1500\\
+t = 3.6739, df = 49, p-value = 0.0005911\\
+alternative hypothesis: true mean is not equal to 1498.78\\
 95 percent confidence interval:\\
  1499.423 1500.977\\
 sample estimates:\\
@@ -316,7 +299,7 @@ t.test(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot3"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 \end{verbatim}
 
@@ -326,8 +309,8 @@ t.test(
 One Sample t-test\\
 
 data:  subset(coildata\$PSI, coildata\$Manufacturing\_Lot == ``Lot3'')\\
-t = -2.0916, df = 49, p-value = 0.04168\\
-alternative hypothesis: true mean is not equal to 1500\\
+t = -1.4305, df = 49, p-value = 0.1589\\
+alternative hypothesis: true mean is not equal to 1498.78\\
 95 percent confidence interval:\\
  1492.431 1499.849\\
 sample estimates:\\
@@ -335,32 +318,8 @@ mean of x\\
   1496.14\\
 \end{org}
 
-
-\subsection{T-Tests on Suspension Coils}
-\label{sec:orgb6caa46}
-
-then briefly summarize your interpretation and findings for the t-test results. Include screenshots of the t-test to support your summary.\\
-
-\section{Part 4: Comparing the MechaCar to the Competition}
-\label{sec:org1f009c3}
-
-Using your knowledge of R, design a statistical study to compare performance of the MechaCar vehicles against performance of vehicles from other manufacturers.\\
-
-Follow the instructions below to complete Deliverable 4.\\
-
-\begin{enumerate}
-\item In your README, create a subheading \#\# Study Design: MechaCar vs Competition.\\
-\item Write a short description of a statistical study that can quantify how the MechaCar performs against the competition. In your study design, think critically about what metrics would be of interest to a consumer: for a few examples, cost, city or highway fuel efficiency, horse power, maintenance cost, or safety rating.\\
-\item In your description, address the following questions:\\
-
-\item What metric or metrics are you going to test?\\
-\item What is the null hypothesis or alternative hypothesis?\\
-\item What statistical test would you use to test the hypothesis? And why?\\
-\item What data is needed to run the statistical test?\\
-\end{enumerate}
-
 \section{Complete script}
-\label{sec:org53961b1}
+\label{sec:org30156b6}
 
 Complete code for MechaCharChallenge.\\
 
@@ -420,28 +379,28 @@ lot_summary <-
   )
 t.test(
   coildata$PSI,
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 t.test(
   subset(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot1"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 t.test(
   subset(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot2"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 t.test(
   subset(
     coildata$PSI,
     coildata$Manufacturing_Lot == "Lot3"
   ),
-  mu=1500
+  mu=mean(coildata$PSI)
 )
 \end{verbatim}
 
